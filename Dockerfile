@@ -103,7 +103,7 @@ RUN sed -i -e s/\"channels_last\"/\"channels_first\"/ ~/.keras/keras.json && \
 
 
 
-ADD theanorc /home/keras/.theanorc
+ADD theanorc /home/kocr/.theanorc
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
