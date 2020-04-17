@@ -5,16 +5,17 @@ DATA?="${HOME}/Data"
 GPU?=0
 DOCKER_FILE=Dockerfile
 DOCKER=GPU=$(GPU) docker
-BACKEND=tensorflow
+BACKEND?=theano
 PYTHON_VERSION?=3.6
-CUDA_VERSION?=9.0
+CUDA_VERSION?=10.1
 CUDNN_VERSION?=7
+THEANO_VERSION?=1.0.4
 TEST=tests/
 SRC?=$(shell dirname `pwd`)
 
 
 build:
-	docker build -t keras --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) -f $(DOCKER_FILE) .
+	docker build -t keras --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) --build-arg theano_version=$(THEANO_VERSION) -f $(DOCKER_FILE) .
 
 bash: build
 	$(DOCKER) run \

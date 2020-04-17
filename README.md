@@ -46,21 +46,16 @@ Server: Docker Engine - Community
 For GPU support install NVIDIA drivers (ideally latest) and
 [nvidia-docker](https://github.com/NVIDIA/nvidia-docker). Run using
 
-Switch between Theano and TensorFlow
-
+Switch between Theano
+```
     $ make bash BACKEND=theano
-   
-Enabling GPU still does not work. 
-    $ make bash GPU=0 bBACKEND=theano
-    $ make bash GPU=0 BACKEND=tensorflow
-
-Prints all make tasks
-
-    $ make help
+```   
 
 Training 0-9 images in container.
+```
     $ cd ~/code/kocr/learning
-    $ python train_cnn.py --train_dirs ../images/numbers/ --test_dirs ../images/samples/
+    $ THEANO_FLAGS=mode=FAST_RUN,device=cuda0,floatX=float32 python train_cnn.py --train_dirs ../images/numbers/ --test_dirs ../images/samples/
+```
 
 
 
