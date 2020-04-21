@@ -24,8 +24,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       wget && \
     rm -rf /var/lib/apt/lists/*
 
-
-
 # Install conda
 ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
@@ -78,30 +76,20 @@ RUN conda install -y python=${python_version} && \
     conda clean -yt 
 
 RUN conda install \
-     keras==2.1.4 
-
-ADD kocr_cnn.cpp /home/src/kocr_cnn.cpp
-ADD train_cnn.py /home/src/train_cnn.py
-RUN cd ~ && mkdir code && cd code && \
-    git clone https://github.com/faxocr/kocr.git && \
-    cd kocr && git fetch origin pull/3/head:replace_preprocessing && git checkout replace_preprocessing && \
-    cd ~/code/kocr/learning && mv train_cnn.py train_cnn.py.bk && cp /home/src/train_cnn.py . && \
-    cd ~/code/kocr/src && mv kocr_cnn.cpp kocr_cnn.cpp.bk && cp /home/src/kocr_cnn.cpp . && make 
+      keras==2.1.4
 
 ARG theano_version=1.0.4
 RUN pip install \
- Pillow==5.0.0 \
- numpy==1.14.1 \
- scipy==1.0.0 \
- h5py==2.7.1 \
- Theano==${theano_version}
+    Pillow==5.0.0 \
+    numpy==1.14.1 \
+    scipy==1.0.0 \
+    h5py==2.7.1 \
+    Theano==${theano_version}
 
 RUN python -c "import keras" 2>/dev/null
 
 RUN sed -i -e s/\"channels_last\"/\"channels_first\"/ ~/.keras/keras.json && \
     sed -i -e s/\"tensorflow\"/\"theano\"/ ~/.keras/keras.json
-
-
 
 ADD theanorc /home/kocr/.theanorc
 
@@ -109,6 +97,14 @@ ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
 ENV PYTHONPATH='/src/:$PYTHONPATH'
+
+ADD kocr_cnn.cpp /home/src/kocr_cnn.cpp
+ADD train_cnn.py /home/src/train_cnn.py
+RUN cd ~ && mkdir code && cd code && \
+    git clone https://github.com/faxocr/kocr.git && \
+    cd kocr && git fetch origin pull/3/head:replace_preprocessing && git checkout replace_preprocessing && \
+    cd ~/code/kocr/learning && mv train_cnn.py train_cnn.py.bk && cp /home/src/train_cnn.py . && \
+    cd ~/code/kocr/src && mv kocr_cnn.cpp kocr_cnn.cpp.bk && cp /home/src/kocr_cnn.cpp . && make
 
 WORKDIR /data
 
