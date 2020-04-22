@@ -2,9 +2,9 @@ help:
 	@cat Makefile
 
 DATA?="${HOME}/Data"
-GPU?=0
+DEVICES?=--gpus=all
 DOCKER_FILE=Dockerfile
-DOCKER=GPU=$(GPU) docker
+DOCKER=docker
 BACKEND?=theano
 PYTHON_VERSION?=3.6
 CUDA_VERSION?=10.1
@@ -15,11 +15,11 @@ SRC?=$(shell dirname `pwd`)
 
 
 build:
-	docker build -t keras --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) --build-arg theano_version=$(THEANO_VERSION) -f $(DOCKER_FILE) .
+	$(DOCKER) build -t keras --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) --build-arg theano_version=$(THEANO_VERSION) -f $(DOCKER_FILE) .
 
 bash: build
 	$(DOCKER) run \
-        -it --gpus all -v $(SRC):/src/workspace -v $(DATA):/data --env KERAS_BACKEND=$(BACKEND) keras bash
+        -it $(DEVICES) -v $(SRC):/src/workspace -v $(DATA):/data --env KERAS_BACKEND=$(BACKEND) keras bash
 
 ipython: build
 	$(DOCKER) run $(DEVICES) $(CUDA_LIB) $(CUDA_SO) -it -v $(SRC):/src/workspace -v $(DATA):/data --env KERAS_BACKEND=$(BACKEND) keras ipython

@@ -1,5 +1,5 @@
 [global]
 floatX = float32
-optimizer=None
+mode = FAST_RUN
 device = cuda
 
