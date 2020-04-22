@@ -55,7 +55,7 @@ Make image and launch container
 Training 0-9 images in container.
 ```
     $ cd ~/code/kocr/learning
-    $ THEANO_FLAGS=mode=FAST_RUN,device=cuda0,floatX=float32 python train_cnn.py --train_dirs ../images/numbers/ --test_dirs ../images/samples/
+    $ python train_cnn.py --train_dirs ../images/numbers/ --test_dirs ../images/samples/
 ```
 
 
