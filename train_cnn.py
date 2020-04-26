@@ -32,7 +32,7 @@ def load_data(input_dirs, nb_dim, pad=3):
         for name in os.listdir(input_dir):
             if not name.endswith('.png'):
                 continue
-            img = cv.imread(input_dir + name, 0)
+            img = cv.imread(os.path.join(input_dir, name), 0)
 
             # Thresholding
             img = cv.threshold(img, 255 * 0.7, 255, cv.THRESH_BINARY_INV)[1]
