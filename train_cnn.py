@@ -40,6 +40,9 @@ def load_data(input_dirs, nb_dim, pad=3):
 
             # Cropping
             xs, ys = np.where(img > 0)
+            if len(xs) == 0 and len(ys) == 0:
+                print(name)
+                continue
             img = img[xs.min(): xs.max() + 1, ys.min(): ys.max() + 1]
 
             # Resizing
