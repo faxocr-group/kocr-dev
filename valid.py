@@ -1,3 +1,5 @@
+import cv2
+import os
 import sys
 
 from os import listdir
@@ -33,6 +35,10 @@ if __name__ == '__main__':
     model = args[1]
 
     file_path = args[2]
+
+    if not os.path.exists("failed"):
+        os.mkdir("failed")
+
 
     file_list = listup_files(file_path)
 
@@ -75,6 +81,15 @@ if __name__ == '__main__':
             else:
 
                 print(img_file,' -> ',result)
+                img = cv2.imread(file_path + img_file)
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                cv2.putText(img,"S",(0,25), font, 1,(0,0,255),1,cv2.LINE_AA)
+
+                cv2.imwrite('failed/' + img_file,img)
+
+                cmd = 'cp ' + file_path + img_file + ' failed/' + img_file 
+                #print(cmd)
+                #os.system(cmd)
 
                 if img_file[0] in stats_fail:
 
