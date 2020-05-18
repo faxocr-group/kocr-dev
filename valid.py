@@ -83,7 +83,7 @@ if __name__ == '__main__':
                 print(img_file,' -> ',result)
                 img = cv2.imread(file_path + img_file)
                 font = cv2.FONT_HERSHEY_SIMPLEX
-                cv2.putText(img,"S",(0,25), font, 1,(0,0,255),1,cv2.LINE_AA)
+                cv2.putText(img,result,(0,25), font, 1,(0,0,255),1,cv2.LINE_AA)
 
                 cv2.imwrite('failed/' + img_file,img)
 
