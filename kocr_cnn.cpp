@@ -48,7 +48,8 @@ cv::Mat preprocessing_for_cnn(cv::Mat img_src) {
       return cv::Mat();
     }
 
-    cv::Mat img_crop = img_bw(cv::Rect(x_min, y_min, x_max - x_min + 1, y_max - y_min + 1)).clone();
+    //cv::Mat img_crop = img_bw(cv::Rect(x_min, y_min, x_max - x_min + 1, y_max - y_min + 1)).clone();
+    cv::Mat img_crop = img_bw.clone();
 
     /*
      * Resizing

@@ -36,6 +36,8 @@ def load_data(input_dirs, nb_dim, pad=3):
 
             # Thresholding
             img = cv.threshold(img, 255 * 0.7, 255, cv.THRESH_BINARY_INV)[1]
+
+
             # img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 2)
 
             # Cropping
@@ -43,7 +45,7 @@ def load_data(input_dirs, nb_dim, pad=3):
             if len(xs) == 0 and len(ys) == 0:
                 print(name)
                 continue
-            img = img[xs.min(): xs.max() + 1, ys.min(): ys.max() + 1]
+            #img = img[xs.min(): xs.max() + 1, ys.min(): ys.max() + 1]
 
             # Resizing
             ratio = (nb_dim - 2 * pad) / float(max(img.shape))
