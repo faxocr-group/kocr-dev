@@ -98,13 +98,14 @@ ENV LANG=C.UTF-8
 
 ENV PYTHONPATH='/src/:$PYTHONPATH'
 
+ADD valid.py /home/src/valid.py
 ADD kocr_cnn.cpp /home/src/kocr_cnn.cpp
 ADD train_cnn.py /home/src/train_cnn.py
 RUN cd ~ && mkdir code && cd code && \
     git clone https://github.com/faxocr/kocr.git && \
     cd kocr && git fetch origin pull/3/head:replace_preprocessing && git checkout replace_preprocessing && \
     cd ~/code/kocr/learning && mv train_cnn.py train_cnn.py.bk && cp /home/src/train_cnn.py . && \
-    cd ~/code/kocr/src && mv kocr_cnn.cpp kocr_cnn.cpp.bk && cp /home/src/kocr_cnn.cpp . && make
+    cd ~/code/kocr/src && cp /home/src/valid.py .  && mv kocr_cnn.cpp kocr_cnn.cpp.bk && cp /home/src/kocr_cnn.cpp . && make
 
 WORKDIR /data
 
